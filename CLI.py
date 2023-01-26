@@ -15,8 +15,9 @@ def Start():
 		elif Operation == "encrypt":
 			Key = input("Key: ")
 			HashingAlgorithm = HashingAlgorithms[input("Hashing Algorithm: ")]
-			if HashingAlgorithm:
-				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, Text, Key)
+			IsMapped = input("Do you want the output to be obfuscated with whitespaces? (Y/N): ").lower() == "y" and True or False
+			if HashingAlgorithm and IsMapped:
+				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, IsMapped, Text, Key)
 				print("Encrypted Text [" + str(len(EncryptedText)) + "]: \"" + EncryptedText + "\"")
 			else:
 				print("[ERROR] You entered an invalid/unsupported Hashing Algorithm. Supported hashing algorithms are (lightest -> heaviest): md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
