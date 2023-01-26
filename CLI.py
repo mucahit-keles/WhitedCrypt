@@ -13,9 +13,11 @@ def Start():
 			IsMapped = input("Do you want the output to be obfuscated with whitespaces? (Y/N): ").lower() == "y" and True or False
 			EncodedText = WhitedCrypt.Encode(IsMapped and 1 or 2, Text)
 			print("Encoded Text [" + str(len(EncodedText)) + "]: \"" + EncodedText + "\"")
+			Start()
 		elif Operation == "decode":
 			DecodedText = WhitedCrypt.Decode(Text)
 			print("Decoded Text [" + str(len(DecodedText)) + "]: \"" + DecodedText + "\"")
+			Start()
 		elif Operation == "encrypt":
 			Key = input("Key: ")
 			HashingAlgorithm = HashingAlgorithms[input("Hashing Algorithm: ")]
@@ -23,6 +25,7 @@ def Start():
 			if HashingAlgorithm:
 				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, IsMapped, Text, Key)
 				print("Encrypted Text [" + str(len(EncryptedText)) + "]: \"" + EncryptedText + "\"")
+				Start()
 			else:
 				print("[ERROR] You entered an invalid/unsupported Hashing Algorithm. Supported hashing algorithms are (lightest -> heaviest): md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
 				Start()
@@ -30,6 +33,7 @@ def Start():
 			Key = input("Key: ")
 			DecryptedText = WhitedCrypt.Decrypt(Text, Key)
 			print("Decrypted Text [" + str(len(DecryptedText)) + "]: \"" + DecryptedText + "\"")
+			Start()
 	else:
 		print("[ERROR] You entered an invalid/unsupported operation. Supported operations are: encode, decode, encrypt, decrypt")
 		Start()
