@@ -17,10 +17,10 @@ def Unmap(Method: int, MappedNumbers: str):
 def ToUnicodeOrder(Separator: str, Text: str, Mapped: bool, MappingMethod: int):
 	UnicodeOrder = ""
 	for Index in range(0, len(Text)):
-    Character = Text[Index]
+		Character = Text[Index]
 		Unicode = str(ord(Character))
 		UnicodeOrder += Mapped == True and Map(MappingMethod, Unicode) or Unicode
-		if Index != len(Text):
+		if Index != len(Text) - 1:
 			UnicodeOrder += Separator
 	return UnicodeOrder
 
