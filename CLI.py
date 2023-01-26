@@ -10,7 +10,8 @@ def Start():
 	if Operation in ValidOperations:
 		Text = input("Text: ")
 		if Operation == "encode":
-			EncodedText = WhitedCrypt.Encode(Text)
+			IsMapped = input("Do you want the output to be obfuscated with whitespaces? (Y/N): ").lower() == "y" and True or False
+			EncodedText = WhitedCrypt.Encode(IsMapped and 1 or 2, Text)
 			print("Encoded Text [" + str(len(EncodedText)) + "]: \"" + EncodedText + "\"")
 		elif Operation == "decode":
 			DecodedText = WhitedCrypt.Decode(Text)
