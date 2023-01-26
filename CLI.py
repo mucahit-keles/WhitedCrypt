@@ -19,7 +19,7 @@ def Start():
 			Key = input("Key: ")
 			HashingAlgorithm = HashingAlgorithms[input("Hashing Algorithm: ")]
 			IsMapped = input("Do you want the output to be obfuscated with whitespaces? (Y/N): ").lower() == "y" and True or False
-			if HashingAlgorithm and IsMapped:
+			if HashingAlgorithm:
 				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, IsMapped, Text, Key)
 				print("Encrypted Text [" + str(len(EncryptedText)) + "]: \"" + EncryptedText + "\"")
 			else:
