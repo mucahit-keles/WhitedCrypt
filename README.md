@@ -1,6 +1,6 @@
 # WhitedCrypt
 
-An encryption algorithm made by me from the ground up. This goes without saying, but I do **NOT** advise using this algorithm for encrypting any important data as the algorithm can't be considered secure enough.
+An encryption algorithm made by me from the ground up. This goes without saying, but I do **NOT** advise using this algorithm for encrypting any important data as the algorithm can't be considered secure enough. Just because it hasn't been cracked yet doesn't mean it won't be.
 I refuse to take any responsibility if any data you encrypt using this algorithm gets cracked.
 
 Pull requests are welcome.
