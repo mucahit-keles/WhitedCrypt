@@ -33,26 +33,30 @@ def FromUnicodeOrder(Separator: str, UnicodeOrder: str, Mapped: bool, MappingMet
 		Text += chr(int(Unicode))
 	return Text
 
-def Encode(PlainText: str):
-	return ToUnicodeOrder(" ", PlainText, True, 1)
+def Encode(MappingMethod: int, PlainText: str):
+	return ToUnicodeOrder(MappingMethod == 1 and " " or MappingMethod == 2 and "1114112", PlainText, True, MappingMethod) # separator is "1114112" because a unicode can be 0x10ffff at max in python
 
 def Decode(EncodedText: str):
-	return FromUnicodeOrder(" ", EncodedText, True, 1)
+	MappingMethod = EncodedText.find(" ") != -1 and 1 or EncodedText.find("1114112") != -1 and 2
+	if MappingMethod:
+		return FromUnicodeOrder(MappingMethod == 1 and " " or MappingMethod == 2 and "1114112", EncodedText, True, MappingMethod) # separator is "1114112" because a unicode can be 0x10ffff at max in python
+	else:
+		return "[ERROR] Mapping is corrupted."
 
 def Encrypt(HashingAlgorithm, Mapped: bool, PlainText: str, Key: str):
 	HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
-	MappedKey = ToUnicodeOrder("1114112", HashedKey, True, 2) # separator is "1114112" because a unicode can be 0x10ffff at max in python
-	MappedText = ToUnicodeOrder("1114112", PlainText, True, 2) # last parameter is 2 to map it with numbers instead of whitespaces
+	MappedKey = Encode(2, HashedKey) # first parameter is 2 to map it with numbers instead of whitespaces
+	MappedText = Encode(2, PlainText) # first parameter is 2 to map it with numbers instead of whitespaces
 	EncryptedText = HashingAlgorithm.__name__.split("openssl_")[1] + "|" + str(int(MappedText) + int(MappedKey))
-	return Mapped == True and Encode(EncryptedText) or EncryptedText
+	return Mapped == True and Encode(1, EncryptedText) or EncryptedText
 
 def Decrypt(EncryptedText: str, Key: str):
-	EncryptedText = EncryptedText.find("|") == -1 and Decode(EncryptedText) or EncryptedText
+	EncryptedText = EncryptedText.find("|") != -1 and EncryptedText or Decode(EncryptedText)
 	HashingAlgorithm = HashingAlgorithms[EncryptedText.split("|")[0]]
 	if not HashingAlgorithm:
-		return "[ERROR] Hashing Algorithm header is corrupt."
+		return "[ERROR] Hashing Algorithm header is corrupted."
 	HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
-	MappedKey = ToUnicodeOrder("1114112", HashedKey, True, 2)
+	MappedKey = Decode(HashedKey)
 	MappedText = str(int(EncryptedText) - int(MappedKey))
-	PlainText = FromUnicodeOrder("1114112", MappedText, True, 2)
+	PlainText = Decode(MappedText)
 	return PlainText
