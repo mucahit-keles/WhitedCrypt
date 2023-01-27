@@ -14,7 +14,7 @@ def Start():
 			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
 			MappingMethod = 0
 			if IsMapped:
-				MappingMethod = input("Which MappingMethod do you want to use? (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
+				MappingMethod = input("Mapping Method (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
 				if not (int(MappingMethod) in WhitedCrypt.ValidMappingMethods):
 					print("[ERROR] You entered an invalid/unsupported MappingMethod. Supported MappingMethods are: 1 (Whitespace), 2 (Numbers), 3 (Emojis)")
 					Start()
@@ -37,7 +37,7 @@ def Start():
 			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
 			MappingMethod = 2
 			if IsMapped:
-				MappingMethod = input("Which MappingMethod do you want to use? (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
+				MappingMethod = input("Mapping Method (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
 				if not (int(MappingMethod) in WhitedCrypt.ValidMappingMethods):
 					print("[ERROR] You entered an invalid/unsupported MappingMethod. Supported MappingMethods are: 1 (Whitespace), 2 (Numbers), 3 (Emojis)")
 					Start()
