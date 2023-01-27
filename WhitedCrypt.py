@@ -40,12 +40,12 @@ def Encode(MappingMethod: int, PlainText: str):
 	else:
 		return "[ERROR] You entered an invalid/unsupported MappingMethod. Supported MappingMethods are: 1 (Whitespace), 2 (Numbers), 3 (Emojis)"
 
-def Decode(EncodedText: str):
+def Decode(EncodedText: str, ForDecryption: bool = False):
 	MappingMethod = EncodedText.find(" ") != -1 and 1 or EncodedText.find("1114112") != -1 and 2 or EncodedText.find("😳") != -1 and 3
 	if MappingMethod:
 		return FromUnicodeOrder(MappingMethod == 1 and " " or MappingMethod == 2 and "1114112" or MappingMethod == 3 and "😳", EncodedText, True, MappingMethod) # separator is "1114112" because a unicode can be 0x10ffff at max in python
 	else:
-		return "[ERROR] Mapping is corrupted."
+		return ForDecryption == True and "[ERROR] You entered an invalid key" or "[ERROR] Mapping is corrupted."
 
 def Encrypt(HashingAlgorithmName: str, Mapped: bool, MappingMethod: int, PlainText: str, Key: str):
 	HashingAlgorithm = HashingAlgorithms[HashingAlgorithmName.lower()]
@@ -69,7 +69,7 @@ def Decrypt(EncryptedText: str, Key: str):
 		HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
 		MappedKey = Encode(2, HashedKey)
 		MappedText = str(int(EncryptedText) - int(MappedKey))
-		PlainText = Decode(MappedText)
+		PlainText = Decode(MappedText, True)
 		return PlainText
 	else:
 		return "[ERROR] Hashing Algorithm header is corrupted."
