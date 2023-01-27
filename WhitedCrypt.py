@@ -61,9 +61,10 @@ def Encrypt(HashingAlgorithmName: str, Mapped: bool, PlainText: str, Key: str):
 def Decrypt(EncryptedText: str, Key: str):
 	EncryptedText = EncryptedText.find("|") != -1 and EncryptedText or Decode(EncryptedText)
 	HashingAlgorithm = HashingAlgorithms[EncryptedText.split("|")[0]]
+	EncryptedText = EncryptedText.split("|")[1]
 	if HashingAlgorithm:
 		HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
-		MappedKey = Decode(HashedKey)
+		MappedKey = Encode(2, HashedKey)
 		MappedText = str(int(EncryptedText) - int(MappedKey))
 		PlainText = Decode(MappedText)
 		return PlainText
