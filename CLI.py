@@ -33,7 +33,7 @@ def Start():
 			Start()
 		elif Operation == "encrypt":
 			Key = input("Key: ")
-			HashingAlgorithm = input("Hashing Algorithm: ").lower()
+			HashingAlgorithm = input("Hashing Algorithm (md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512): ").lower()
 			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
 			MappingMethod = 2
 			if IsMapped:
