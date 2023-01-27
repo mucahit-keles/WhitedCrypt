@@ -1,3 +1,5 @@
+# Make sure this is in the same folder as WhitedCrypt.py
+
 import hashlib
 import WhitedCrypt
 
