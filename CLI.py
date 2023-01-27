@@ -2,6 +2,7 @@
 
 import hashlib
 import WhitedCrypt
+import pyperclip
 
 def Start():
 	print("Press CTRL+C anytime to exit.")
@@ -19,16 +20,22 @@ def Start():
 					Start()
 			EncodedText = WhitedCrypt.Encode(IsMapped and int(MappingMethod) or 2, Text)
 			print("Encoded Text [" + str(len(EncodedText)) + "]: \"" + EncodedText + "\"")
+			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
+			if CopyToClipboard:
+				pyperclip.copy(EncodedText)
 			Start()
 		elif Operation == "decode":
 			DecodedText = WhitedCrypt.Decode(Text)
 			print("Decoded Text [" + str(len(DecodedText)) + "]: \"" + DecodedText + "\"")
+			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
+			if CopyToClipboard:
+				pyperclip.copy(DecodedText)
 			Start()
 		elif Operation == "encrypt":
 			Key = input("Key: ")
 			HashingAlgorithm = input("Hashing Algorithm: ").lower()
 			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
-			MappingMethod = 0
+			MappingMethod = 2
 			if IsMapped:
 				MappingMethod = input("Which MappingMethod do you want to use? (1/2/3): ")
 				if not (int(MappingMethod) in WhitedCrypt.ValidMappingMethods):
@@ -37,6 +44,9 @@ def Start():
 			if WhitedCrypt.HashingAlgorithms[HashingAlgorithm]:
 				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, IsMapped, int(MappingMethod), Text, Key)
 				print("Encrypted Text [" + str(len(EncryptedText)) + "]: \"" + EncryptedText + "\"")
+				CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
+				if CopyToClipboard:
+					pyperclip.copy(EncryptedText)
 				Start()
 			else:
 				print("[ERROR] You entered an invalid/unsupported Hashing Algorithm. Supported hashing algorithms are (lightest -> heaviest): md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
@@ -45,6 +55,9 @@ def Start():
 			Key = input("Key: ")
 			DecryptedText = WhitedCrypt.Decrypt(Text, Key)
 			print("Decrypted Text [" + str(len(DecryptedText)) + "]: \"" + DecryptedText + "\"")
+			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
+			if CopyToClipboard:
+				pyperclip.copy(DecryptedText)
 			Start()
 	else:
 		print("[ERROR] You entered an invalid/unsupported operation. Supported operations are: encode, decode, encrypt, decrypt")
