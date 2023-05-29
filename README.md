@@ -2,10 +2,10 @@
 
 **Bu repository'nin sahipliği eski hesabımdan bu hesaba aktarıldığı için, önceki commitlerim eski hesabımın adına gözükmekte.**
 
-Sıfırdan benim tarafımdan yapılmış bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verileri şifrelemek için kullanmanızı **ÖNERMİYORUM**. ***Henüz kırılmamış olması hiçbir zaman kırılmayacağı anlamına gelmiyor.***
+Sıfırdan benim tarafımdan yapılmış bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verilerin şifrelenmesi için kullanılmasını **ÖNERMİYORUM**.
 Bu algoritmayı kullanarak şifrelediğiniz herhangi bir veri kırılırsa, bunun sorumluluğu tamamen sizin üzerinizde.
 
-Pull requestlere açığım.
+Pull requestlerine açığım.
 
 ## Nasıl mı çalışıyor?
 Temel olarak 4 fonksiyon var:
