@@ -26,9 +26,9 @@ Temel olarak 4 fonksiyon var:
 - [DuzYazi]'yı da [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
 * Sayı maskelemesi kullanmamızın sebebi bu string'leri mantıksal birer sayıya dönüştürüp üzerlerinde matematiksel işlemler yapabilmek.
 * Artık hem [HashliAnahtar], hem de [DuzYazi] mantıksal birer sayı olduğuna göre, bunların üzerlerinde matematiksel işlemler yapabiliriz.
-- [KodlanmisHashliAnahtar]'ı [KodlanmisDuzYazi]'ya ekler.
+- [KodlanmisHashliAnahtar]'ı, [KodlanmisDuzYazi]'ya ekler.
 * Bir yazı olarak sonuna eklemez, tam anlamıyla matematiksel bir işlem olarak ekler, bu da metnin kendisini elde etmek için sonuçtan [KodlanmisHashliAnahtar]'ı matematiksel olarak çıkartmanız gerektiği anlamına gelir. Bu da anahtara sahip olmanızı gerektirir.
-- Sonucu [Kodla] fonksiyonu ile seçilen maskeleme tipi ile kodlayıp kullanıcıya döndürür.
+- Sonucu, [Kodla] fonksiyonu ile seçilen maskeleme tipi ile kodlayıp kullanıcıya döndürür.
 
 **SifrelemeyiCoz(*SifrelenmisYazi: string*, *Anahtar: string*):**
 - [Sifrele]'nin tersini yapar.
