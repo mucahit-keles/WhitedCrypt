@@ -4,7 +4,7 @@ import hashlib as HashKutuphanesi
 import WhitedCrypt
 import pyperclip
 
-def Start():
+def Basla():
 	print("Çıkmak için CTRL+C'ye basabilirsiniz.")
 	Operasyon = input("Operasyon (Kodla, KodlamayiCoz, Sifrele, SifrelemeyiCoz): ").lower()
 	GecerliOperasyonlar = {"kodla", "kodlamayicoz", "sifrele", "sifrelemeyicoz"}
@@ -17,20 +17,20 @@ def Start():
 				MaskelemeMetodu = input("Maskeleme Metodu (1 = Boşluklar, 2 = Sayılar, 3 = Emojiler): ")
 				if not (int(MaskelemeMetodu) in WhitedCrypt.GecerliMaskelemeMetodlari):
 					print("[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)")
-					Start()
+					Basla()
 			KodlanmisYazi = WhitedCrypt.Kodla(Maskeli and int(MaskelemeMetodu) or 2, Yazi)
 			print("Kodlanmış Yazı [" + str(len(KodlanmisYazi)) + "]: \"" + KodlanmisYazi + "\"")
 			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
 			if Kopyalanacak:
 				pyperclip.copy(KodlanmisYazi)
-			Start()
+			Basla()
 		elif Operasyon == "kodlamayicoz":
 			CozulmusYazi = WhitedCrypt.KodlamayiCoz(Yazi)
 			print("Çözülmüş Yazı [" + str(len(CozulmusYazi)) + "]: \"" + CozulmusYazi + "\"")
 			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
 			if Kopyalanacak:
 				pyperclip.copy(CozulmusYazi)
-			Start()
+			Basla()
 		elif Operasyon == "sifrele":
 			Anahtar = input("Anahtar: ")
 			HashlemeAlgoritmasi = input("Hashleme Algoritması (md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512): ").lower()
@@ -40,17 +40,17 @@ def Start():
 				MaskelemeMetodu = input("Maskeleme Metodu (1 = Boşluklar, 2 = Sayılar, 3 = Emojiler): ")
 				if not (int(MaskelemeMetodu) in WhitedCrypt.GecerliMaskelemeMetodlari):
 					print("[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)")
-					Start()
+					Basla()
 			if WhitedCrypt.HashlemeAlgoritmalari[HashlemeAlgoritmasi]:
 				SifrelenmisYazi = WhitedCrypt.Sifrele(HashlemeAlgoritmasi, Maskeli, int(MaskelemeMetodu), Yazi, Anahtar)
 				print("Şifreli Yazı [" + str(len(SifrelenmisYazi)) + "]: \"" + SifrelenmisYazi + "\"")
 				Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
 				if Kopyalanacak:
 					pyperclip.copy(SifrelenmisYazi)
-				Start()
+				Basla()
 			else:
 				print("[HATA] Geçersiz veya desteklenmeyen bir hashleme algoritması girdiniz. Geçerli hashleme algoritmaları listedeki gibidir: md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
-				Start()
+				Basla()
 		elif Operasyon == "sifrelemeyicoz":
 			Anahtar = input("Anahtar: ")
 			CozulmusYazi = WhitedCrypt.SifrelemeyiCoz(Yazi, Anahtar)
@@ -58,9 +58,9 @@ def Start():
 			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
 			if Kopyalanacak:
 				pyperclip.copy(CozulmusYazi)
-			Start()
+			Basla()
 	else:
 		print("[HATA] Geçersiz veya desteklenmeyen bir operasyon girdiniz. Geçerli operasyonlar listedeki gibidir: Kodla, KodlamayiCoz, Sifrele, SifrelemeyiCoz")
-		Start()
+		Basla()
 
-Start()
+Basla()
