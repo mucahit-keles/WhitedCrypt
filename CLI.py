@@ -1,66 +1,66 @@
-# Make sure this is in the same folder as WhitedCrypt.py
+# Bu scriptin WhitedCrypt.py ile aynı klasör içerisinde olduğundan emin olun.
 
-import hashlib
+import hashlib as HashKutuphanesi
 import WhitedCrypt
 import pyperclip
 
 def Start():
-	print("Press CTRL+C anytime to exit.")
-	Operation = input("Operation: ").lower()
-	ValidOperations = {"encode", "decode", "encrypt", "decrypt"}
-	if Operation in ValidOperations:
-		Text = input("Text: ")
-		if Operation == "encode":
-			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
-			MappingMethod = 0
-			if IsMapped:
-				MappingMethod = input("Mapping Method (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
-				if not (int(MappingMethod) in WhitedCrypt.ValidMappingMethods):
-					print("[ERROR] You entered an invalid/unsupported MappingMethod. Supported MappingMethods are: 1 (Whitespace), 2 (Numbers), 3 (Emojis)")
+	print("Çıkmak için CTRL+C'ye basabilirsiniz.")
+	Operasyon = input("Operasyon (Kodla, KodlamayiCoz, Sifrele, SifrelemeyiCoz): ").lower()
+	GecerliOperasyonlar = {"kodla", "kodlamayicoz", "sifrele", "sifrelemeyicoz"}
+	if Operasyon in GecerliOperasyonlar:
+		Yazi = input("Yazı: ")
+		if Operasyon == "kodla":
+			Maskeli = input("Çıktının maskelenmesini ister misiniz? (E/H): ").lower() == "e" and True or False
+			MaskelemeMetodu = 0
+			if Maskeli:
+				MaskelemeMetodu = input("Maskeleme Metodu (1 = Boşluklar, 2 = Sayılar, 3 = Emojiler): ")
+				if not (int(MaskelemeMetodu) in WhitedCrypt.GecerliMaskelemeMetodlari):
+					print("[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)")
 					Start()
-			EncodedText = WhitedCrypt.Encode(IsMapped and int(MappingMethod) or 2, Text)
-			print("Encoded Text [" + str(len(EncodedText)) + "]: \"" + EncodedText + "\"")
-			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
-			if CopyToClipboard:
-				pyperclip.copy(EncodedText)
+			KodlanmisYazi = WhitedCrypt.Kodla(Maskeli and int(MaskelemeMetodu) or 2, Yazi)
+			print("Kodlanmış Yazı [" + str(len(KodlanmisYazi)) + "]: \"" + KodlanmisYazi + "\"")
+			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
+			if Kopyalanacak:
+				pyperclip.copy(KodlanmisYazi)
 			Start()
-		elif Operation == "decode":
-			DecodedText = WhitedCrypt.Decode(Text)
-			print("Decoded Text [" + str(len(DecodedText)) + "]: \"" + DecodedText + "\"")
-			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
-			if CopyToClipboard:
-				pyperclip.copy(DecodedText)
+		elif Operasyon == "kodlamayicoz":
+			CozulmusYazi = WhitedCrypt.KodlamayiCoz(Yazi)
+			print("Çözülmüş Yazı [" + str(len(CozulmusYazi)) + "]: \"" + CozulmusYazi + "\"")
+			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
+			if Kopyalanacak:
+				pyperclip.copy(CozulmusYazi)
 			Start()
-		elif Operation == "encrypt":
-			Key = input("Key: ")
-			HashingAlgorithm = input("Hashing Algorithm (md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512): ").lower()
-			IsMapped = input("Do you want the output to be obfuscated? (Y/N): ").lower() == "y" and True or False
-			MappingMethod = 2
-			if IsMapped:
-				MappingMethod = input("Mapping Method (1 = Whitespaces, 2 = Numbers, 3 = Emojis): ")
-				if not (int(MappingMethod) in WhitedCrypt.ValidMappingMethods):
-					print("[ERROR] You entered an invalid/unsupported MappingMethod. Supported MappingMethods are: 1 (Whitespace), 2 (Numbers), 3 (Emojis)")
+		elif Operasyon == "sifrele":
+			Anahtar = input("Anahtar: ")
+			HashlemeAlgoritmasi = input("Hashleme Algoritması (md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512): ").lower()
+			Maskeli = input("Çıktının maskelenmesini istermisiniz? (E/H): ").lower() == "e" and True or False
+			MaskelemeMetodu = 2
+			if Maskeli:
+				MaskelemeMetodu = input("Maskeleme Metodu (1 = Boşluklar, 2 = Sayılar, 3 = Emojiler): ")
+				if not (int(MaskelemeMetodu) in WhitedCrypt.GecerliMaskelemeMetodlari):
+					print("[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)")
 					Start()
-			if WhitedCrypt.HashingAlgorithms[HashingAlgorithm]:
-				EncryptedText = WhitedCrypt.Encrypt(HashingAlgorithm, IsMapped, int(MappingMethod), Text, Key)
-				print("Encrypted Text [" + str(len(EncryptedText)) + "]: \"" + EncryptedText + "\"")
-				CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
-				if CopyToClipboard:
-					pyperclip.copy(EncryptedText)
+			if WhitedCrypt.HashlemeAlgoritmalari[HashlemeAlgoritmasi]:
+				SifrelenmisYazi = WhitedCrypt.Sifrele(HashlemeAlgoritmasi, Maskeli, int(MaskelemeMetodu), Yazi, Anahtar)
+				print("Şifreli Yazı [" + str(len(SifrelenmisYazi)) + "]: \"" + SifrelenmisYazi + "\"")
+				Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
+				if Kopyalanacak:
+					pyperclip.copy(SifrelenmisYazi)
 				Start()
 			else:
-				print("[ERROR] You entered an invalid/unsupported Hashing Algorithm. Supported hashing algorithms are (lightest -> heaviest): md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
+				print("[HATA] Geçersiz veya desteklenmeyen bir hashleme algoritması girdiniz. Geçerli hashleme algoritmaları listedeki gibidir: md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512")
 				Start()
-		elif Operation == "decrypt":
-			Key = input("Key: ")
-			DecryptedText = WhitedCrypt.Decrypt(Text, Key)
-			print("Decrypted Text [" + str(len(DecryptedText)) + "]: \"" + DecryptedText + "\"")
-			CopyToClipboard = input("Do you want the output to be copied to your clipboard? (Y/N): ").lower() == "y" and True or False
-			if CopyToClipboard:
-				pyperclip.copy(DecryptedText)
+		elif Operasyon == "sifrelemeyicoz":
+			Anahtar = input("Anahtar: ")
+			CozulmusYazi = WhitedCrypt.SifrelemeyiCoz(Yazi, Anahtar)
+			print("Çözülmüş Yazı [" + str(len(CozulmusYazi)) + "]: \"" + CozulmusYazi + "\"")
+			Kopyalanacak = input("Çıktının kopyalanmasını ister misiniz? (E/H): ").lower() == "e" and True or False
+			if Kopyalanacak:
+				pyperclip.copy(CozulmusYazi)
 			Start()
 	else:
-		print("[ERROR] You entered an invalid/unsupported operation. Supported operations are: encode, decode, encrypt, decrypt")
+		print("[HATA] Geçersiz veya desteklenmeyen bir operasyon girdiniz. Geçerli operasyonlar listedeki gibidir: Kodla, KodlamayiCoz, Sifrele, SifrelemeyiCoz")
 		Start()
 
 Start()
