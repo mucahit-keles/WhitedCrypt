@@ -12,17 +12,17 @@ Pull requestlerine açığım.
 ## Nasıl mı çalışıyor?
 Temel olarak 4 fonksiyon var:
 
-**Kodla(*KodlamaMetodu: int*, *DuzYazi: string*):**
+**Kodla(*KodlamaMetodu: int*, *DuzYazi: str*):**
 - [DuzYazi] içindeki her karakterin üzerinden geçer.
 - Karakterin eşdeğer Unicode numarasını alır.
 - Ayırıcılarla (Örnek: "unicode1\unicode2\unicode3") bir [UnicodeSatiri] (Tüm Unicode numaralarının bir satırda olması hali) oluşturur.
 - Ardından, [UnicodeSatiri] içindeki tüm Unicode numaralarının üzerinden geçer.
 - Karakterleri, seçilen maskeleme tipine göre farklı karakterler ile değiştirerek [UnicodeSatiri]'nı maskeler.
 
-**KodlamayiCoz(*KodlanmisMetin: string*):**
+**KodlamayiCoz(*KodlanmisMetin: str*):**
 - [Kodla]'nin tersini yapar.
 
-**Sifrele(*DuzYazi: string*, *Anahtar: string*):**
+**Sifrele(*HashlemeAlgoritmasiAdi: str*, *DuzYazi: str*, *Anahtar: str*):**
 - [Anahtar]'ı, seçilen hashleme algoritması ile hashler.
 - [HashliAnahtar]'ı, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
 - [DuzYazi]'yı da, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
@@ -32,5 +32,5 @@ Temel olarak 4 fonksiyon var:
 * Bir yazı olarak sonuna eklemez, tam anlamıyla matematiksel bir işlem olarak ekler, bu da metnin kendisini elde etmek için sonuçtan [KodlanmisHashliAnahtar]'ı matematiksel olarak çıkartmanız gerektiği anlamına gelir. Bu da anahtara sahip olmanızı gerektirir.
 - Sonucu, [Kodla] fonksiyonu ile kodlayıp kullanıcıya döndürür.
 
-**SifrelemeyiCoz(*SifrelenmisYazi: string*, *Anahtar: string*):**
+**SifrelemeyiCoz(*SifrelenmisYazi: str*, *Anahtar: str*):**
 - [Sifrele]'nin tersini yapar.
