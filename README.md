@@ -12,7 +12,7 @@ Pull requestlerine açığım.
 ## Nasıl mı çalışıyor?
 Temel olarak 4 fonksiyon var:
 
-**Kodla(*DuzYazi: string*):**
+**Kodla(*KodlamaMetodu: int*, *DuzYazi: string*):**
 - [DuzYazi] içindeki her karakterin üzerinden geçer.
 - Karakterin eşdeğer Unicode numarasını alır.
 - Ayırıcılarla (Örnek: "unicode1\unicode2\unicode3") bir [UnicodeSatiri] (Tüm Unicode numaralarının bir satırda olması hali) oluşturur.
@@ -23,7 +23,7 @@ Temel olarak 4 fonksiyon var:
 - [Kodla]'nin tersini yapar.
 
 **Sifrele(*DuzYazi: string*, *Anahtar: string*):**
-- [Anahtar]'ı, seçilen hash algoritması ile hashler.
+- [Anahtar]'ı, seçilen hashleme algoritması ile hashler.
 - [HashliAnahtar]'ı, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
 - [DuzYazi]'yı da, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
 * Sayı maskelemesi kullanmamızın sebebi bu string'leri mantıksal birer sayıya dönüştürüp üzerlerinde matematiksel işlemler yapabilmek.
