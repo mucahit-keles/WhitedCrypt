@@ -36,14 +36,14 @@ def UnicodeSatiriniCoz(Ayirici: str, UnicodeSatiri: str, Maskeli: bool, Maskelem
 
 def Kodla(MaskelemeMetodu: int, DuzYazi: str):
 	if MaskelemeMetodu in GecerliMaskelemeMetodlari:
-		return UnicodeSatirinaCevir(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", DuzYazi, True, MaskelemeMetodu) # separator is "1114112" because a unicode can be 0x10ffff at max in python
+		return UnicodeSatirinaCevir(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", DuzYazi, True, MaskelemeMetodu) # Sayı maskeleme ayırıcısının "1114112" olmasının sebebi Python'da bir unicode'un en fazla 0x10ffff olabilmesi
 	else:
 		return "[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)"
 
 def KodlamayiCoz(KodlanmisYazi: str, SifrelemeCozmekIcin: bool = False):
 	MaskelemeMetodu = KodlanmisYazi.find(" ") != -1 and 1 or KodlanmisYazi.find("1114112") != -1 and 2 or KodlanmisYazi.find("😳") != -1 and 3
 	if MaskelemeMetodu:
-		return UnicodeSatiriniCoz(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", KodlanmisYazi, True, MaskelemeMetodu) # separator is "1114112" because a unicode can be 0x10ffff at max in python
+		return UnicodeSatiriniCoz(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", KodlanmisYazi, True, MaskelemeMetodu) # Sayı maskeleme ayırıcısının "1114112" olmasının sebebi Python'da bir unicode'un en fazla 0x10ffff olabilmesi
 	else:
 		return SifrelemeCozmekIcin == True and "[HATA] Geçersiz bir şifre girdiniz." or "[HATA] Maskeleme bozuk."
 
