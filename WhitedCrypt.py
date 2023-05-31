@@ -45,7 +45,7 @@ def KodlamayiCoz(KodlanmisYazi: str, SifrelemeCozmekIcin: bool = False):
 	if MaskelemeMetodu:
 		return UnicodeSatiriniCoz(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", KodlanmisYazi, True, MaskelemeMetodu) # separator is "1114112" because a unicode can be 0x10ffff at max in python
 	else:
-		return SifrelemeCozmekIcin == True and "[HATA] You entered an invalid key" or "[HATA] Mapping is corrupted."
+		return SifrelemeCozmekIcin == True and "[HATA] Geçersiz bir şifre girdiniz." or "[HATA] Maskeleme bozuk."
 
 def Sifrele(HashlemeAlgoritmasiAdi: str, Maskeli: bool, MaskelemeMetodu: int, DuzYazi: str, Anahtar: str):
 	HashlemeAlgoritmasi = HashlemeAlgoritmalari[HashlemeAlgoritmasiAdi.lower()]
@@ -72,4 +72,4 @@ def SifrelemeyiCoz(SifrelenmisYazi: str, Anahtar: str):
 		CozulmusYazi = KodlamayiCoz(KodlanmisYazi, True)
 		return CozulmusYazi
 	else:
-		return "[HATA] Hashleme Algoritması header'ı geçersiz."
+		return "[HATA] Hashleme Algoritması header'ı bozuk."
