@@ -52,8 +52,8 @@ def Sifrele(HashlemeAlgoritmasiAdi: str, Maskeli: bool, MaskelemeMetodu: int, Du
 	if HashlemeAlgoritmasi:
 		if MaskelemeMetodu in GecerliMaskelemeMetodlari:
 			HashliAnahtar = HashlemeAlgoritmasi(Anahtar.encode()).hexdigest()
-			KodlanmisHashliAnahtar = Kodla(2, HashliAnahtar) # first parameter is 2 to map it with numbers instead of whitespaces
-			KodlanmisYazi = Kodla(2, DuzYazi) # first parameter is 2 to map it with numbers instead of whitespaces
+			KodlanmisHashliAnahtar = Kodla(2, HashliAnahtar) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
+			KodlanmisYazi = Kodla(2, DuzYazi) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
 			SifrelenmisYazi = HashlemeAlgoritmasiAdi + "|" + str(int(KodlanmisYazi) + int(KodlanmisHashliAnahtar))
 			return Maskeli == True and Kodla(MaskelemeMetodu, SifrelenmisYazi) or SifrelenmisYazi
 		else:
