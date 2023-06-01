@@ -7,8 +7,6 @@ Bu algoritmayı kullanarak şifrelediğiniz herhangi bir veri kırılırsa, bunu
 
 Pull requestlerine açığım.
 
-**NOT: An itibarı ile bazı hashleme algoritmaları ile bir yazı şifrelerken maskelemeyi seçerseniz, kod hata verecektir.**
-
 ## Nasıl mı çalışıyor?
 Temel olarak 4 fonksiyon var:
 
