@@ -2,7 +2,7 @@
 
 **Bu repository'nin sahipliği eski hesabımdan bu hesaba aktarıldığı için, önceki commitlerim eski hesabımın adına gözükmekte.**
 
-Sıfırdan benim tarafımdan yapılmış bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verilerin şifrelenmesi için kullanılmasını **ÖNERMİYORUM**.
+Kendimi denemek için Python ile geliştirdiğim bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verilerin şifrelenmesi için kullanılmasını **ÖNERMİYORUM**.
 Bu algoritmayı kullanarak şifrelediğiniz herhangi bir veri kırılırsa, bunun sorumluluğu tamamen sizin üzerinizde.
 
 Pull requestlerine açığım.
