@@ -5,8 +5,6 @@
 Kendimi denemek için Python ile geliştirdiğim bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verilerin şifrelenmesi için kullanılmasını **ÖNERMİYORUM**.
 Bu algoritmayı kullanarak şifrelediğiniz herhangi bir veri kırılırsa, bunun sorumluluğu tamamen sizin üzerinizde.
 
-Pull requestlerine açığım.
-
 ## Nasıl mı çalışıyor?
 Temel olarak 4 fonksiyon var:
 
