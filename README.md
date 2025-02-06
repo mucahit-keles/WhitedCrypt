@@ -1,32 +1,32 @@
 # WhitedCrypt
 
-**Bu repository'nin sahipliği eski hesabımdan bu hesaba aktarıldığı için, önceki commitlerim eski hesabımın adına gözükmekte.**
+**FYI: Because I moved this repository from my old account to this one, my old commits appear as from my old account.**
 
-Kendimi denemek için Python ile geliştirdiğim bir şifreleme algoritması. Bunu söylemeye gerek olmadığını düşünüyorum, fakat algoritma yeterince güvenli olmadığı için önemli verilerin şifrelenmesi için kullanılmasını **ÖNERMİYORUM**.
-Bu algoritmayı kullanarak şifrelediğiniz herhangi bir veri kırılırsa, bunun sorumluluğu tamamen sizin üzerinizde.
+An encryption algorithm I developed to experiment with simple encryption algorithms. I think there's no need to mention this, but the algorithm can't be considered secure enough and **I DO NOT RECOMMEND using this algorithm for encrypting anything sensitive**.
+If any data you encrypt using this algorithm gets cracked, the responsibility of that is fully on you.
 
-## Nasıl mı çalışıyor?
-Temel olarak 4 fonksiyon var:
+## How does it work?
+To put it simply, there are 4 functions:
 
-**Kodla(*KodlamaMetodu: int*, *DuzYazi: str*):**
-- [DuzYazi] içindeki her karakterin üzerinden geçer.
-- Karakterin eşdeğer Unicode numarasını alır.
-- Ayırıcılarla (Örnek: "unicode1\unicode2\unicode3") bir [UnicodeSatiri] (Tüm Unicode numaralarının bir satırda olması hali) oluşturur.
-- Ardından, [UnicodeSatiri] içindeki tüm Unicode numaralarının üzerinden geçer.
-- Karakterleri, seçilen maskeleme tipine göre farklı karakterler ile değiştirerek [UnicodeSatiri]'nı maskeler.
+**Encode(*EncodingMethod: int*, *PlainText: str*):**
+- Goes over each character in [PlainText].
+- Gets the Unicode character of the current character.
+- Creates a [UnicodeGroup] (Where all the unicode numbers are in one string) with separators (e.g. "unicode1\unicode2\unicode3").
+- Loops over each unicode in the [UnicodeGroup].
+- Masks the [UnicodeGroup] by replacing each unicode character with different characters according to the currently selected masking type.
 
-**KodlamayiCoz(*KodlanmisMetin: str*):**
-- [Kodla]'nin tersini yapar.
+**Decode(*EncodedText: str*):**
+- Does the opposite of [Encode].
 
-**Sifrele(*HashlemeAlgoritmasiAdi: str*, *DuzYazi: str*, *Anahtar: str*):**
-- [Anahtar]'ı, seçilen hashleme algoritması ile hashler.
-- [HashliAnahtar]'ı, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
-- [DuzYazi]'yı da, [Kodla] fonksiyonu ile sayı maskelemesi kullanarak kodlar.
-* Sayı maskelemesi kullanmamızın sebebi bu string'leri mantıksal birer sayıya dönüştürüp üzerlerinde matematiksel işlemler yapabilmek.
-* Artık hem [HashliAnahtar], hem de [DuzYazi] mantıksal birer sayı olduğuna göre, bunların üzerlerinde matematiksel işlemler yapabiliriz.
-- [KodlanmisHashliAnahtar]'ı, [KodlanmisDuzYazi]'ya ekler.
-* Bir yazı olarak sonuna eklemez, tam anlamıyla matematiksel bir işlem olarak ekler, bu da metnin kendisini elde etmek için sonuçtan [KodlanmisHashliAnahtar]'ı matematiksel olarak çıkartmanız gerektiği anlamına gelir. Bu da anahtara sahip olmanızı gerektirir.
-- Sonucu, [Kodla] fonksiyonu ile kodlayıp kullanıcıya döndürür.
+**Encrypt(*HashingAlgorithmName: str*, *PlainText: str*, *Key: str*):**
+- Hashes the [Key] with the currently selected hashing algorithm.
+- Encodes the [HashedKey] using the [Encode] function with number masking.
+- Also encodes the [PlainText] using the [Encode] function with number masking.
+* The reason we're using number masking here is to convert these strings into logical numbers which we can then do mathematical operations on.
+* Now that both [HashedKey] and [PlainText] are logical numbers, we can do mathematical operations on them.
+- Adds [EncodedHashedKey] to [EncodedPlainText].
+* When I say adds, I don't mean it appends it to the end of the string, it literally adds them as a mathematical operation, which means to get the [PlainText] back, you need to subtract exactly the [EncodedHashedKey] from the result. Which in turn requires you to have the [Key].
+- Lastly, encodes the result with the [Encode] function with the preferred masking type.
 
-**SifrelemeyiCoz(*SifrelenmisYazi: str*, *Anahtar: str*):**
-- [Sifrele]'nin tersini yapar.
+**Decrypt(*EncryptedText: str*, *Key: str*):**
+- Does the opposite of [Encrypt].
