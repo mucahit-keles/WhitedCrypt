@@ -8,12 +8,12 @@ If any data you encrypt using this algorithm gets cracked, the responsibility of
 ## How does it work?
 To put it simply, there are 4 functions:
 
-**Encode(*EncodingMethod: int*, *PlainText: str*):**
+**Encode(*MaskingMethod: int*, *PlainText: str*):**
 - Goes over each character in [PlainText].
 - Gets the Unicode character of the current character.
 - Creates a [UnicodeGroup] (Where all the unicode numbers are in one string) with separators (e.g. "unicode1\unicode2\unicode3").
 - Loops over each unicode in the [UnicodeGroup].
-- Masks the [UnicodeGroup] by replacing each unicode character with different characters according to the currently selected masking type.
+- Masks the [UnicodeGroup] by replacing each unicode character with different characters according to the currently selected masking method.
 
 **Decode(*EncodedText: str*):**
 - Does the opposite of [Encode].
