@@ -1,101 +1,100 @@
 import sys
-import hashlib as HashKutuphanesi
+import hashlib
 
-HashlemeAlgoritmalari = {"md5": HashKutuphanesi.md5, "sha1": HashKutuphanesi.sha1, "sha224": HashKutuphanesi.sha224, "sha256": HashKutuphanesi.sha256, "sha384": HashKutuphanesi.sha384, "sha512": HashKutuphanesi.sha512, "sha3_224": HashKutuphanesi.sha3_224, "sha3_256": HashKutuphanesi.sha3_256, "sha3_384": HashKutuphanesi.sha3_384, "sha3_512": HashKutuphanesi.sha3_512}
-GecerliMaskelemeMetodlari = {1, 2, 3}
+HashingAlgorithms = {"md5": hashlib.md5, "sha1": hashlib.sha1, "sha224": hashlib.sha224, "sha256": hashlib.sha256, "sha384": hashlib.sha384, "sha512": hashlib.sha512, "sha3_224": hashlib.sha3_224, "sha3_256": hashlib.sha3_256, "sha3_384": hashlib.sha3_384, "sha3_512": hashlib.sha3_512}
+ValidMaskingMethods = {1, 2, 3}
 
-def Maskele(MaskelemeMetodu: int, UnicodeSayisi: str):
-	Maskeleme = MaskelemeMetodu == 1 and "          " or MaskelemeMetodu == 2 and "0945862731" or MaskelemeMetodu == 3 and "😮😀🙃😏🧐😘😍😬😠🤬"
-	MaskeliUnicodeSayisi = ""
-	for UnicodeHanesi in UnicodeSayisi:
-		MaskeliUnicodeSayisi += Maskeleme[int(UnicodeHanesi)]
-	return MaskeliUnicodeSayisi
+def Mask(MaskingMethod: int, UnicodeNumber: str):
+	Masking = MaskingMethod == 1 and "          " or MaskingMethod == 2 and "0945862731" or MaskingMethod == 3 and "😮😀🙃😏🧐😘😍😬😠🤬" or "0945862731"
+	MaskedUnicodeNumber = ""
+	for UnicodeDigit in UnicodeNumber:
+		MaskedUnicodeNumber += Masking[int(UnicodeDigit)]
+	return MaskedUnicodeNumber
 
-def MaskelemeyiCoz(MaskelemeMetodu: int, MaskelenmisUnicodeSayisi: str):
-	Maskeleme = MaskelemeMetodu == 1 and "          " or MaskelemeMetodu == 2 and "0945862731" or MaskelemeMetodu == 3 and "😮😀🙃😏🧐😘😍😬😠🤬"
-	MaskesizUnicodeSayisi = ""
-	for MaskelenmisUnicodeHanesi in MaskelenmisUnicodeSayisi:
-		MaskesizUnicodeSayisi += str(Maskeleme.find(MaskelenmisUnicodeHanesi))
-	return MaskesizUnicodeSayisi
+def Unmask(MaskingMethod: int, MaskedUnicodeNumber: str):
+	Masking = MaskingMethod == 1 and "          " or MaskingMethod == 2 and "0945862731" or MaskingMethod == 3 and "😮😀🙃😏🧐😘😍😬😠🤬" or "0945862731"
+	UnmaskedUnicodeNumber = ""
+	for MaskedUnicodeDigit in MaskedUnicodeNumber:
+		UnmaskedUnicodeNumber += str(Masking.find(MaskedUnicodeDigit))
+	return UnmaskedUnicodeNumber
 
-def UnicodeSatirinaCevir(Ayirici: str, Yazi: str, Maskeli: bool, MaskelemeMetodu: int):
-	UnicodeSatiri = ""
-	for Indis in range(0, len(Yazi)):
-		Karakter = Yazi[Indis]
-		UnicodeSayisi = str(ord(Karakter))
-		UnicodeSatiri += Maskeli == True and Maskele(MaskelemeMetodu, UnicodeSayisi) or UnicodeSayisi
-		if Indis != len(Yazi) - 1:
-			UnicodeSatiri += Ayirici
-	return UnicodeSatiri
+def ToUnicodeGroup(Separator: str, PlainText: str, Masked: bool, MaskingMethod: int):
+	UnicodeGroup = ""
+	for Index in range(0, len(PlainText)):
+		Character = PlainText[Index]
+		UnicodeNumber = str(ord(Character))
+		UnicodeGroup += Masked == True and Mask(MaskingMethod, UnicodeNumber) or UnicodeNumber
+		if Index != len(PlainText) - 1:
+			UnicodeGroup += Separator
+	return UnicodeGroup
 
-def UnicodeSatiriniCoz(Ayirici: str, UnicodeSatiri: str, Maskeli: bool, MaskelemeMetodu: int):
-	Yazi = ""
-	for UnicodeSayisi in UnicodeSatiri.split(Ayirici):
-		UnicodeSayisi = Maskeli == True and MaskelemeyiCoz(MaskelemeMetodu, UnicodeSayisi) or UnicodeSayisi
-		Yazi += chr(int(UnicodeSayisi))
-	return Yazi
+def FromUnicodeGroup(Separator: str, UnicodeGroup: str, Masked: bool, MaskingMethod: int):
+	PlainText = ""
+	for UnicodeNumber in UnicodeGroup.split(Separator):
+		UnicodeNumber = Masked == True and Unmask(MaskingMethod, UnicodeNumber) or UnicodeNumber
+		PlainText += chr(int(UnicodeNumber))
+	return PlainText
 
-def Kodla(MaskelemeMetodu: int, DuzYazi: str):
-	if MaskelemeMetodu in GecerliMaskelemeMetodlari:
-		return UnicodeSatirinaCevir(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", DuzYazi, True, MaskelemeMetodu) # Sayı maskeleme ayırıcısının "1114112" olmasının sebebi Python'da bir unicode'un en fazla 0x10ffff olabilmesi
+def Encode(MaskingMethod: int, PlainText: str):
+	if MaskingMethod in ValidMaskingMethods:
+		return ToUnicodeGroup(MaskingMethod == 1 and " " or MaskingMethod == 2 and "1114112" or MaskingMethod == 3 and "😳" or "1114112", PlainText, True, MaskingMethod) # The reason for the separator for number masking being "1114112" is because a unicode can be at most 0x10ffff in Python
 	else:
-		return "[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)"
+		return "[ERROR] You entered an invalid or unsupported masking method. Valid masking methods are as follows: 1 (Whitespaces), 2 (Numbers), 3 (Emojis)"
 
-def KodlamayiCoz(KodlanmisYazi: str, SifrelemeCozmekIcin: bool = False):
-	MaskelemeMetodu = KodlanmisYazi.find(" ") != -1 and 1 or KodlanmisYazi.find("1114112") != -1 and 2 or KodlanmisYazi.find("😳") != -1 and 3
-	if MaskelemeMetodu:
-		return UnicodeSatiriniCoz(MaskelemeMetodu == 1 and " " or MaskelemeMetodu == 2 and "1114112" or MaskelemeMetodu == 3 and "😳", KodlanmisYazi, True, MaskelemeMetodu) # Sayı maskeleme ayırıcısının "1114112" olmasının sebebi Python'da bir unicode'un en fazla 0x10ffff olabilmesi
+def Decode(EncodedPlainText: str, ToDecrypt: bool = False):
+	MaskingMethod = EncodedPlainText.find(" ") != -1 and 1 or EncodedPlainText.find("1114112") != -1 and 2 or EncodedPlainText.find("😳") != -1 and 3
+	if MaskingMethod:
+		return FromUnicodeGroup(MaskingMethod == 1 and " " or MaskingMethod == 2 and "1114112" or MaskingMethod == 3 and "😳" or "1114112", EncodedPlainText, True, MaskingMethod) # Sayı maskeleme ayırıcısının "1114112" olmasının sebebi Python'da bir unicode'un en fazla 0x10ffff olabilmesi
 	else:
-		return SifrelemeCozmekIcin == True and "[HATA] Geçersiz bir şifre girdiniz." or "[HATA] Maskeleme bozuk."
+		return ToDecrypt == True and "[ERROR] You entered an invalid password." or "[ERROR] The masking is broken."
 
-def Sifrele(HashlemeAlgoritmasiAdi: str, Maskeli: bool, MaskelemeMetodu: int, DuzYazi: str, Anahtar: str):
-	if HashlemeAlgoritmasiAdi in HashlemeAlgoritmalari:
-		HashlemeAlgoritmasi = HashlemeAlgoritmalari[HashlemeAlgoritmasiAdi.lower()]
-		if Maskeli == False or MaskelemeMetodu in GecerliMaskelemeMetodlari:
-			HashliAnahtar = HashlemeAlgoritmasi(Anahtar.encode()).hexdigest()
-			KodlanmisHashliAnahtar = Kodla(2, HashliAnahtar) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
-			KodlanmisYazi = Kodla(2, DuzYazi) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
-			SifrelenmisYazi = HashlemeAlgoritmasiAdi + "|" + str(int(KodlanmisYazi) + int(KodlanmisHashliAnahtar))
-			return Maskeli == True and Kodla(MaskelemeMetodu, SifrelenmisYazi) or SifrelenmisYazi
+def Encrypt(HashingAlgorithmName: str, Masked: bool, MaskingMethod: int, PlainText: str, Key: str):
+	if HashingAlgorithmName in HashingAlgorithms:
+		HashingAlgorithm = HashingAlgorithms[HashingAlgorithmName.lower()]
+		if Masked == False or MaskingMethod in ValidMaskingMethods:
+			HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
+			EncodedHashedKey = Encode(2, HashedKey) # The first parameter is 2 to mask with numbers
+			EncodedPlainText = Encode(2, PlainText) # The first parameter is 2 to mask with numbers
+			EncryptedText = HashingAlgorithmName + "|" + str(int(EncodedPlainText) + int(EncodedHashedKey))
+			return Masked == True and Encode(MaskingMethod, EncryptedText) or EncryptedText
 		else:
-			return "[HATA] Geçersiz veya desteklenmeyen bir maskeleme metodu girdiniz. Geçerli maskeleme metodları listedeki gibidir: 1 (Boşluklar), 2 (Sayılar), 3 (Emojiler)"
+			return "[ERROR] You entered an invalid or unsupported masking method. Valid masking methods are as follows: 1 (Whitespaces), 2 (Numbers), 3 (Emojis)"
 	else:
-		return "[HATA] Geçersiz veya desteklenmeyen bir hashleme algoritması girdiniz. Geçerli hashleme algoritmaları listedeki gibidir: md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512"
+		return "[ERROR] You entered an invalid or unsupported hashing algorithm. Valid hashing algorithms are as follows: md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512"
 
-def SifrelemeyiCoz(SifrelenmisYazi: str, Anahtar: str):
-	SifrelenmisYazi = SifrelenmisYazi.find("|") != -1 and SifrelenmisYazi or KodlamayiCoz(SifrelenmisYazi)
-	HashlemeAlgoritmasi = HashlemeAlgoritmalari[SifrelenmisYazi.split("|")[0]]
-	SifrelenmisYazi = SifrelenmisYazi.split("|")[1]
-	if HashlemeAlgoritmasi:
-		HashliAnahtar = HashlemeAlgoritmasi(Anahtar.encode()).hexdigest()
-		KodlanmisHashliAnahtar = Kodla(2, HashliAnahtar)
-		KodlanmisYazi = str(int(SifrelenmisYazi) - int(KodlanmisHashliAnahtar))
-		CozulmusYazi = KodlamayiCoz(KodlanmisYazi, True)
-		return CozulmusYazi
+def Decrypt(EncryptedText: str, Key: str):
+	EncryptedText = EncryptedText.find("|") != -1 and EncryptedText or Decode(EncryptedText)
+	HashingAlgorithm = HashingAlgorithms[EncryptedText.split("|")[0]]
+	EncryptedText = EncryptedText.split("|")[1]
+	if HashingAlgorithm:
+		HashedKey = HashingAlgorithm(Key.encode()).hexdigest()
+		EncodedHashedKey = Encode(2, HashedKey) # The first parameter is 2 to mask with numbers
+		EncodedPlainText = str(int(EncryptedText) - int(EncodedHashedKey))
+		PlainText = Decode(EncodedPlainText, True)
+		return PlainText
 	else:
-		return "[HATA] Hashleme Algoritması header'ı bozuk."
+		return "[ERROR] The hashing algorithm's header is broken."
 
 
-Parametreler = sys.argv
+Parameters = sys.argv
 
-if len(Parametreler) > 1:
-	Operasyon = Parametreler[1].lower()
-	if Operasyon == "kodla":
-		MaskelemeMetodu = int(Parametreler[2])
-		DuzYazi = Parametreler[3]
-		print(Kodla(MaskelemeMetodu, DuzYazi))
-	elif Operasyon == "kodlamayicoz":
-		KodlanmisYazi = Parametreler[2]
-		print(KodlamayiCoz(KodlanmisYazi))
-	elif Operasyon == "sifrele":
-		HashlemeAlgoritmasiAdi = Parametreler[2]
-		Maskeli = Parametreler[3].lower() == "true"
-		MaskelemeMetodu = int(Parametreler[4])
-		DuzYazi = Parametreler[5]
-		Anahtar = Parametreler[6]
-		print(Sifrele(HashlemeAlgoritmasiAdi, Maskeli, MaskelemeMetodu, DuzYazi, Anahtar))
-	elif Operasyon == "sifrelemeyicoz":
-		SifrelenmisYazi = Parametreler[2]
-		Anahtar = Parametreler[3]
-		print(SifrelemeyiCoz(SifrelenmisYazi, Anahtar))
-
+if len(Parameters) > 1:
+	Operation = Parameters[1].lower()
+	if Operation == "encode":
+		MaskingMethod = int(Parameters[2])
+		PlainText = Parameters[3]
+		print(Encode(MaskingMethod, PlainText))
+	elif Operation == "decode":
+		EncodedPlainText = Parameters[2]
+		print(Decode(EncodedPlainText))
+	elif Operation == "encrypt":
+		HashingAlgorithmName = Parameters[2]
+		Masked = Parameters[3].lower() == "true"
+		MaskingMethod = int(Parameters[4])
+		PlainText = Parameters[5]
+		Key = Parameters[6]
+		print(Encrypt(HashingAlgorithmName, Masked, MaskingMethod, PlainText, Key))
+	elif Operation == "decrypt":
+		EncryptedText = Parameters[2]
+		Key = Parameters[3]
+		print(Decrypt(EncryptedText, Key))
